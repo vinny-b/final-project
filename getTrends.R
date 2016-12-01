@@ -1,4 +1,4 @@
-install.packages('twitteR')
+# install.packages('twitteR')
 library(twitteR)
 library(dplyr)
 
@@ -16,6 +16,14 @@ access.secret <- 'nwvP4yzA6mKNE2P0Ma0diEvHQNN24McUnLH80kbmD4uGx'
 options(httr_oauth_cache=T) #This will enable the use of a local file to cache OAuth access credentials between R sessions.
 setup_twitter_oauth(consumer.key, consumer.secret, access.token, access.secret)
 
+
+trends.data.frame <- availableTrendLocations() %>%
+                       filter(country %in% 'United States')
+View(trends.data.frame)
+getTrends('2357024')
+
+
+
 lucaspuente <- getUser("lucaspuente")
 location(lucaspuente)
 
@@ -32,7 +40,4 @@ location(getUser(favs[[2]]$screenName))
 location(getUser(favs[[6]]$screenName))
 
 
-trends.data.frame <- availableTrendLocations()
-trends.data.frame <- trends.data.frame %>% filter(country %in% 'United States')
-View(trends.data.frame)
-getTrends('2357024')
+
