@@ -19,9 +19,13 @@ setup_twitter_oauth(consumer.key, consumer.secret, access.token, access.secret)
 
 trends.data.frame <- availableTrendLocations() %>%
                        filter(country %in% 'United States')
+trends.data.frame <- trends.data.frame[-c(64), ]
 View(trends.data.frame)
-getTrends('2357024')
 
+getTrends <- function(userCityInput) {
+  location <- trends.data.frame %>% filter(name == userCityInput)
+  getTrends('2357024')
+}
 
 
 lucaspuente <- getUser("lucaspuente")
