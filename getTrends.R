@@ -18,20 +18,25 @@ setup_twitter_oauth(consumer.key, consumer.secret, access.token, access.secret)
 
 
 trends.data.frame <- availableTrendLocations() %>%
-                       filter(country %in% 'United States')
+  filter(country %in% 'United States')
 trends.data.frame <- trends.data.frame[-c(64), ]
 View(trends.data.frame)
 
 getTrends <- function(userCityInput) {
   location <- trends.data.frame %>% filter(name == userCityInput)
-  getTrends('2357024')
+  return(location$woeid)
 }
+
+
+
+
+########### Below is the stuff for favorited tweets ##############
 
 
 lucaspuente <- getUser("lucaspuente")
 location(lucaspuente)
 
-lucaspuente_follower_IDs<-lucaspuente$getFollowers(retryOnRateLimit=180)
+lucaspuente_follower_IDs <- lucaspuente$getFollowers(retryOnRateLimit=180)
 length(lucaspuente_follower_IDs)
 
 favs <- favorites("lucaspuente", n = 21)
@@ -40,8 +45,8 @@ favs <- favorites("lucaspuente", n = 21)
 unlist(favs)
 View(favs)
 View(favs[[1]])
+name <- favs[[2]]$screenName
 location(getUser(favs[[2]]$screenName))
 location(getUser(favs[[6]]$screenName))
-
 
 
