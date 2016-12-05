@@ -1,6 +1,10 @@
 # install.packages('twitteR')
 library(twitteR)
 library(dplyr)
+library(ggplot2)
+library(plotly)
+library(maps)
+
 
 if (!require("twitteR")) {
   install.packages("twitteR", repos="http://cran.rstudio.com/") 
@@ -20,43 +24,23 @@ setup_twitter_oauth(consumer.key, consumer.secret, access.token, access.secret)
 
 ########### Below is the stuff for favorited tweets ##############
 
-
-#lucaspuente <- getUser("lucaspuente")
-#location(lucaspuente)
-
-#lucaspuente_follower_IDs <- lucaspuente$getFollowers(retryOnRateLimit=180)
-#length(lucaspuente_follower_IDs)
-
-favs <- favorites("lucaspuente", n = 21)
-# strsplit(favs[[1]], ":")
-
-unlist(favs)
-
-
-name <- favs[[2]]$screenName
-location(getUser(favs[[1]]$screenName))
-location(getUser(favs[[6]]$screenName))
-
- (getUser(favs[[1]]$screenName))$location
-
 ####
 
 #get favorites
-favs <- favorites("lucaspuente", n = 21)
-# strsplit(favs[[1]], ":")
+favs <- favorites("lucaspuente", n = 40)
 
 fav <- unlist(favs)
 
-listc <- c()
 
 
 #length(fav)
 
 ## for loop to build list of locations
+listc <- c()
 for (i in 1:length(fav))
   listc <- append(listc, (getUser(fav[[i]]$screenName)$location))
 
-View(listc)
+
 
 
 
@@ -67,5 +51,36 @@ liste <- gsub(".*,", "", listc)
 
 View(liste)  
 
-  
-  
+liste[2]
+
+## practice with state codes
+flatstate <- c("MA", "OR", "CA", "CA", "TX", "MD", "MD", "MD", "IL", "IL", "IL", "IL", "IL")
+datastate <- as.data.frame(flatstate)
+exstate <- datastate %>% 
+      group_by(flatstate) %>%
+      summarize(count = n())
+
+
+
+
+
+# give state boundaries a white border
+l <- list(color = toRGB("white"), width = 2)
+# specify some map projection/options
+g <- list(
+  scope = 'usa',
+  projection = list(type = 'albers usa'),
+  showlakes = TRUE,
+  lakecolor = toRGB('white')
+)
+
+plot_geo(exstate, locationmode = 'USA-states') %>%
+  add_trace(
+    z = ~count, locations = ~flatstate,
+    color = ~count, colors = 'Purples'
+  ) %>%
+  colorbar(title = "Millions USD") %>%
+  layout(
+    title = '2011 US Agriculture Exports by State<br>(Hover for breakdown)',
+    geo = g
+  )
