@@ -52,8 +52,23 @@ name <- favs[[2]]$screenName
 location(getUser(favs[[1]]$screenName))
 location(getUser(favs[[6]]$screenName))
 
-(getUser(fav$screenName$location))
+(getUser(fav[[4]]$screenName)$location)
+
+listc <- c( "MA")
+
+listA <- append(listA, (getUser(fav[[4]]$screenName)$location))
+length(fav)
+
+for (i in 1:length(fav))
+  listc <- append(listc, (getUser(fav[[i]]$screenName)$location))
+
+View(listc)
 
 
+####
 
-
+bg <- favorites("BillGates", n = 30)
+listd <- c()
+for (i in 1:length(bg))
+  listd <- append(listd, (getUser(fav[[i]]$screenName)$location))
+View(listd)
