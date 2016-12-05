@@ -74,13 +74,15 @@ g <- list(
   lakecolor = toRGB('white')
 )
 
+inputHandle <- "USER HANDLE"
+
 plot_geo(exstate, locationmode = 'USA-states') %>%
   add_trace(
     z = ~count, locations = ~flatstate,
     color = ~count, colors = 'Purples'
   ) %>%
-  colorbar(title = "Millions USD") %>%
+  colorbar(title = "Users") %>%
   layout(
-    title = '2011 US Agriculture Exports by State<br>(Hover for breakdown)',
+    title = paste("Location of users that", inputHandle, "most recently favorited"),
     geo = g
   )
