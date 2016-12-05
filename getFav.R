@@ -21,18 +21,18 @@ setup_twitter_oauth(consumer.key, consumer.secret, access.token, access.secret)
 ########### Below is the stuff for favorited tweets ##############
 
 
-lucaspuente <- getUser("lucaspuente")
-location(lucaspuente)
+#lucaspuente <- getUser("lucaspuente")
+#location(lucaspuente)
 
-lucaspuente_follower_IDs <- lucaspuente$getFollowers(retryOnRateLimit=180)
-length(lucaspuente_follower_IDs)
+#lucaspuente_follower_IDs <- lucaspuente$getFollowers(retryOnRateLimit=180)
+#length(lucaspuente_follower_IDs)
 
 favs <- favorites("lucaspuente", n = 21)
 # strsplit(favs[[1]], ":")
 
 unlist(favs)
-View(favs)
-View(favs[[1]])
+
+
 name <- favs[[2]]$screenName
 location(getUser(favs[[1]]$screenName))
 location(getUser(favs[[6]]$screenName))
@@ -41,34 +41,31 @@ location(getUser(favs[[6]]$screenName))
 
 ####
 
-
+#get favorites
 favs <- favorites("lucaspuente", n = 21)
 # strsplit(favs[[1]], ":")
 
 fav <- unlist(favs)
-View(favs)
-View(favs[[1]])
-name <- favs[[2]]$screenName
-location(getUser(favs[[1]]$screenName))
-location(getUser(favs[[6]]$screenName))
 
-(getUser(fav[[4]]$screenName)$location)
+listc <- c()
 
-listc <- c( "MA")
 
-listA <- append(listA, (getUser(fav[[4]]$screenName)$location))
-length(fav)
+#length(fav)
 
+## for loop to build list of locations
 for (i in 1:length(fav))
   listc <- append(listc, (getUser(fav[[i]]$screenName)$location))
 
 View(listc)
 
 
-####
 
-bg <- favorites("BillGates", n = 30)
-listd <- c()
-for (i in 1:length(bg))
-  listd <- append(listd, (getUser(fav[[i]]$screenName)$location))
-View(listd)
+###
+
+# remove everything before comma 
+liste <- gsub(".*,", "", listc)
+
+View(liste)  
+
+  
+  
