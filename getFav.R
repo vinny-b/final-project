@@ -1,9 +1,9 @@
 # install.packages('twitteR')
 library(twitteR)
 library(dplyr)
-library(ggplot2)
 library(plotly)
 library(maps)
+library(jsonlite)
 
 
 if (!require("twitteR")) {
@@ -50,8 +50,17 @@ for (i in 1:length(fav))
 liste <- gsub(".*,", "", listc)
 
 View(liste)  
-
+liste <- as.data.frame(liste)
 liste[2]
+vectorliste <- as.vector(liste)
+len2 <- length(vectorliste) == 2
+colnames(liste) <- "stateabbrev"
+
+liste <- flatten(liste)
+
+
+
+filter(liste, stateabbrev == "CA")
 
 ## practice with state codes
 flatstate <- c("MA", "OR", "CA", "CA", "TX", "MD", "MD", "MD", "IL", "IL", "IL", "IL", "IL")
