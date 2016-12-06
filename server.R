@@ -2,8 +2,8 @@
 library(dplyr)
 
 # Read in data
-setwd("C:/Users/mihuz_000/Desktop/Info/m14-shiny")
-source('exercise-4/scripts/buildMap.R')
+setwd("C:Users/mihuz_000/Desktop/Info/final-project")
+source('getTrends.R')
 source('exercise-4/scripts/buildScatter.R')
 df <- read.csv('exercise-4/data/electoral_college.csv', stringsAsFactors = FALSE)
 state.codes <- read.csv('exercise-4/data/state_codes.csv', stringsAsFactors = FALSE)
@@ -25,11 +25,11 @@ shinyServer(function(input, output) {
   output$value <- renderPrint({
     input$text })
 
-  output$map <- renderPlotly({ 
-    return(BuildMap(joined.data, input$mapvar))
+  output$chart <- renderPlotly({ 
+    return(getTrends(input$city, input$text))
   }) 
   
-  output$scatter <- renderPlotly({
+  output$map <- renderPlotly({
     return(BuildScatter(joined.data, input$search))
   })
 })
