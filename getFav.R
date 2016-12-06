@@ -32,46 +32,52 @@ favs <- favorites("lucaspuente", n = 40)
 fav <- unlist(favs)
 
 
-
 #length(fav)
 
 ## for loop to build list of locations
-listc <- c()
+locationlist <- c()
 for (i in 1:length(fav))
-  listc <- append(listc, (getUser(fav[[i]]$screenName)$location))
-
-
-
-
+  locationlist <- append(locationlist, (getUser(fav[[i]]$screenName)$location))
 
 ###
 
 # remove everything before comma 
-liste <- gsub(".*,", "", listc)
 
-View(liste)  
-liste <- as.data.frame(liste)
-liste[2]
-vectorliste <- as.vector(liste)
+cleanlist <- gsub(".*,", "", locationlist)
+
+View(cleanlist) 
+
+#convert list to dataframe 
+dflist <- as.data.frame(cleanlist)
+
+#fix column name 
+colnames(dflist) <- "stateabbrev"
+
+
+vectorliste <- as.vector(cleanlist)
 len2 <- length(vectorliste) == 2
-colnames(liste) <- "stateabbrev"
 
-liste <- flatten(liste)
+
+flatlist <- flatten(dflist)
 
 
 
 filter(liste, stateabbrev == "CA")
 
 ## practice with state codes
+
+#df of states
 flatstate <- c("MA", "OR", "CA", "CA", "TX", "MD", "MD", "MD", "IL", "IL", "IL", "IL", "IL")
 datastate <- as.data.frame(flatstate)
+
+#count frequency 
 exstate <- datastate %>% 
-      group_by(flatstate) %>%
-      summarize(count = n())
+  group_by(flatstate) %>%
+  summarize(count = n())
 
 
 
-
+#build frequency heat map
 
 # give state boundaries a white border
 l <- list(color = toRGB("white"), width = 2)
@@ -95,3 +101,4 @@ plot_geo(exstate, locationmode = 'USA-states') %>%
     title = paste("Location of users that", inputHandle, "most recently favorited"),
     geo = g
   )
+
