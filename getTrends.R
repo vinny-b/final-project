@@ -145,6 +145,3 @@ getRecentPostsInChosenLocation <- function(str, num.posts, chosen.city) {
 tweetdataframe <- do.call('rbind', lapply(getRecentPostsInChosenLocation("", 15, "San_Jose"), as.data.frame))
 
 tweetdataframe$text
-
-
-
