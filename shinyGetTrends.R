@@ -32,12 +32,6 @@ shinyGetTrends <- function (inputString, inputCity = "Albuquerque") {
   trends.data.frame <- trends.data.frame[-c(64), ]
   # View(trends.data.frame)
   
-  # Takes in a city name (from the list of major cities that Twitter has current trending
-  # data in) as a string and returns that location's WOEID (the Where On Earth Identifier)
-  # as a string.
-  location <- trends.data.frame %>% filter(name == inputCity)
-  woeids <- location$woeid
-  
   # Key-Value pair list of all cities that twitteR has trending data on and their
   # corresponding longitude and latitude coordinates
   geo.location.data <- list(Albuquerque="35.085334,-106.605553",
