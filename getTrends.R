@@ -25,13 +25,15 @@ trends.data.frame <- availableTrendLocations() %>%
 trends.data.frame <- trends.data.frame[-c(64), ]
 View(trends.data.frame)
 
-# Takes in a city name (from the list of major cities that Twitter has current trending
-# data in) as a string and returns that location's WOEID (the Where On Earth Identifier)
-# as a string.
-getWOEID <- function(userCityInput) {
-  location <- trends.data.frame %>% filter(name == userCityInput)
-  return(location$woeid)
-}
+
+
+
+
+
+
+########################################################################################
+##################      MAKE THIS WORK BY LOADING IN A .CSV FILE      ##################
+########################################################################################
 
 # Key-Value pair list of all cities that twitteR has trending data on and their
 # corresponding longitude and latitude coordinates
@@ -136,13 +138,13 @@ getRecentPostsInChosenLocation <- function(str, num.posts, chosen.city) {
                                  geocode = getGeocode(chosen.city), resultType = 'recent')
   }
   if (length(return_value) == 0) {
-    return ("Your search string wasn't found in any recent Twitter posts.")
+    return_value <- ("Your search string wasn't found in any recent Twitter posts.")
   }
   return (return_value)
 }
 
 # Takes the data returned from the getRecentPostsInChosenLocation(...) function
 # and converts it into a data frame
-tweetdataframe <- do.call('rbind', lapply(getRecentPostsInChosenLocation("staybrazy", 15, "San_Jose"), as.data.frame))
+tweetdataframe <- do.call('rbind', lapply(getRecentPostsInChosenLocation("eraser", 15, "San_Jose"), as.data.frame))
 
-tweetdataframe
+tweetdataframe$text
