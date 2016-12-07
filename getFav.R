@@ -27,7 +27,10 @@ setup_twitter_oauth(consumer.key, consumer.secret, access.token, access.secret)
 ####
 
 #get favorites
-favs <- favorites("lucaspuente", n = 40)
+
+inputHandle <- "lucaspuente"
+
+favs <- favorites(inputHandle, n = 100)
 
 fav <- unlist(favs)
 
@@ -45,34 +48,58 @@ for (i in 1:length(fav))
 
 cleanlist <- gsub(".*,", "", locationlist)
 
-View(cleanlist) 
 
 #convert list to dataframe 
 dflist <- as.data.frame(cleanlist)
 
-#fix column name 
+#fix column name
 colnames(dflist) <- "stateabbrev"
 
+#dflist <- as.data.frame(dflist, stringsAsFactors = FALSE)
+# dflist <- droplevels(dflist)
+View(dflist)
 
-vectorliste <- as.vector(cleanlist)
-len2 <- length(vectorliste) == 2
+
+#for loop to keep only state abbrev
+
+#states <- c("AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY")
+#states <- as.data.frame(states, stringsAsFactors = FALSE)
+
+# for (i in 1:length(dflist)) {
+#   for (j in 1:length(states)) {
+#     if (!identical(dflist$stateabbrev[i], states[j])) {
+#       dflist <- dflist[, -c(i)]
+#     }
+#   }
+# }
 
 
 flatlist <- flatten(dflist)
 
+liststateab <- grep('AL|AK|AZ|AR|CA|CO|CT|DE|FL|GA|HI|ID|IL|IN|IA|KS|KY|LA|ME|MD|MA|MI|MN|MS|MO|MT|NE|NV|NH|NJ|NM|NY|NC|ND|OH|OK|OR|PA|RI|SC|SD|TN|TX|UT|VT|VA|WA|WV|WI|WY', flatlist$stateabbrev, value = TRUE)
+df1 <- data.frame(liststateab)
+
+colnames(df1) <- "states1"
+
+View(df1)
 
 
-filter(liste, stateabbrev == "CA")
 
-## practice with state codes
+## practice with state codes DATA
+
 
 #df of states
+
 flatstate <- c("MA", "OR", "CA", "CA", "TX", "MD", "MD", "MD", "IL", "IL", "IL", "IL", "IL")
 datastate <- as.data.frame(flatstate)
+View(datastate)
+
+###
+
 
 #count frequency 
-exstate <- datastate %>% 
-  group_by(flatstate) %>%
+exstate <- df1 %>% 
+  group_by(states1) %>%
   summarize(count = n())
 
 
@@ -89,11 +116,10 @@ g <- list(
   lakecolor = toRGB('white')
 )
 
-inputHandle <- "USER HANDLE"
 
 plot_geo(exstate, locationmode = 'USA-states') %>%
   add_trace(
-    z = ~count, locations = ~flatstate,
+    z = ~count, locations = ~states1,
     color = ~count, colors = 'Purples'
   ) %>%
   colorbar(title = "Users") %>%
