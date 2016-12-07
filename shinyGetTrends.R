@@ -116,7 +116,9 @@ shinyGetTrends <- function (inputString, inputCity = "Albuquerque") {
   
   # Finds the geocode to use in the searchTwitter(...) function based on the 
   # chosen.city
-  city.geocode <- paste0(inputCityCoordinates, ",50mi")
+  city.geocode <- paste0(input.city.coordinates, ",50mi")
+  
+  num.posts <- 20
   
   # This function gets the recent posts that contain a given search string in 
   # the chosen city. If there are fewer posts than asked for, this function will
@@ -127,17 +129,22 @@ shinyGetTrends <- function (inputString, inputCity = "Albuquerque") {
     return_value <- "There weren't enough recent posts with your search string."
     stop("doEverything error message")
   } else {
-    return_value <- searchTwitter(formatted.search.string, n = 10, lang = 'en', 
+    return_value <- searchTwitter(formatted.search.string, n = num.posts, lang = 'en', 
                                  geocode = city.geocode, resultType = 'recent')
   }
   if (length(return_value) == 0) {
     return_value <- ("Your search string wasn't found in any recent Twitter posts.")
   }
 
-  
-  # Takes the data returned from the getRecentPostsInChosenLocation(...) function
-  # and converts it into a data frame
-  tweetdataframe <- do.call('rbind', lapply(return_value, as.data.frame))
-  
-  return (tweetdataframe)
+  if (return_value == ("Your search string wasn't found in any recent Twitter posts.") ||
+      return_value == ("There weren't enough recent posts with your search string.")) {
+        return (return_value)
+      }
+  else {
+    # Takes the data returned from the getRecentPostsInChosenLocation(...) function
+    # and converts it into a data frame
+    tweetdataframe <- do.call('rbind', lapply(return_value, as.data.frame))
+    
+    return (tweetdataframe$text)
+  }
 }
