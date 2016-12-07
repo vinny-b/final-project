@@ -121,6 +121,7 @@ getGeocode <- function(chosen.city) {
   return (result)
 }
 
+
 # This function gets the recent posts that contain a given search string in 
 # the chosen city. If there are fewer posts than asked for, this function will
 # return as many posts as there are. If there are 0 recent posts, a message
@@ -131,7 +132,7 @@ getRecentPostsInChosenLocation <- function(str, num.posts, chosen.city) {
     return_value <- "There weren't enough recent posts with your search string."
     stop("doEverything error message")
   } else {
-    return_value = searchTwitter(formatSearchString(str), n = num.posts, lang = 'en', 
+    return_value <- searchTwitter(formatSearchString(str), n = num.posts, lang = 'en', 
                                  geocode = getGeocode(chosen.city), resultType = 'recent')
   }
   if (length(return_value) == 0) {
@@ -142,6 +143,6 @@ getRecentPostsInChosenLocation <- function(str, num.posts, chosen.city) {
 
 # Takes the data returned from the getRecentPostsInChosenLocation(...) function
 # and converts it into a data frame
-tweetdataframe <- do.call('rbind', lapply(getRecentPostsInChosenLocation("", 15, "San_Jose"), as.data.frame))
+tweetdataframe <- do.call('rbind', lapply(getRecentPostsInChosenLocation("staybrazy", 15, "San_Jose"), as.data.frame))
 
-tweetdataframe$text
+tweetdataframe
