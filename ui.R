@@ -36,10 +36,10 @@ shinyUI(navbarPage('Identifying Trends in Twitter',
                                                                                              'San Diego' = 'San_Diego' , 'San Francisco' = 'San_Francisco' , 'San Jose' = 'San_Jose',
                                                                                              'Seattle' = 'Seattle' , 'St. Louis' = 'St._Louis' , 'Tallahassee' = 'Tallahassee' ,
                                                                                              'Tampa' = 'Tampa' , 'Tuscon' = 'Tuscon' , 'Virginia Beach' = "Virginia_Beach",
-                                                                                             'Washington' = 'Washington'), value = "Albuquerque"),
+                                                                                             'Washington' = 'Washington')),
                                 br("Further specify your result by entering a keyword to see related tweets in that city."),
                                 br(),
-                                textInput("text", label = "Search for a Tweet:", value = "Enter a keyword..."),
+                                textInput("text", label = "Search for a Tweet:"),
                                 br()
                                 
                                 
@@ -49,31 +49,8 @@ shinyUI(navbarPage('Identifying Trends in Twitter',
                 
                               # Main panel: display plotly map
                               mainPanel(
-                                plotlyOutput('chart'),
-                                htmlOutput("picture")
+                                tableOutput('chart')
                               )
                    )
-                   ), 
-                   
-                   # Create a tabPanel to show your scatter plot
-                   tabPanel('Favorites Map',
-                            # Add a titlePanel to your tab
-                            titlePanel('Where are your favorite Tweets coming from?'),
-                            
-                            # Create a sidebar layout for this tab (page)
-                            sidebarLayout(
-                              
-                              # Create a sidebarPanel for your controls
-                              sidebarPanel(
-                                
-                                # Make a textInput widget for searching for a state in your scatter plot
-                                textInput('search', label="Twitter Handle:", value = 'Enter Twitter handle...')
-                              ),
-                              
-                              # Create a main panel, in which you should display your plotly Scatter plot
-                              mainPanel(
-                                plotlyOutput('map')
-                              )
-                            )
                    )
 ))

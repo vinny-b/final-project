@@ -2,17 +2,7 @@
 library(dplyr)
 
 # Read in data
-setwd("C:Users/mihuz_000/Desktop/Info/final-project")
-source('getTrends.R')
-source('exercise-4/scripts/buildScatter.R')
-df <- read.csv('exercise-4/data/electoral_college.csv', stringsAsFactors = FALSE)
-state.codes <- read.csv('exercise-4/data/state_codes.csv', stringsAsFactors = FALSE)
-
-# Join together state.codes and df
-joined.data <- left_join(df, state.codes, by="state")
-
-# Compute the electoral votes per 100K people in each state
-joined.data <- joined.data %>% mutate(ratio = votes/population * 100000)
+source('shinyGetTrends.R')
 
 # Start shinyServer
 shinyServer(function(input, output) { 
@@ -22,14 +12,9 @@ shinyServer(function(input, output) {
   
   
   # Render a plotly object that returns your map
-  output$value <- renderPrint({
-    input$text })
 
-  output$chart <- renderPlotly({ 
-    return(getTrends(input$city, input$text))
-  }) 
-  
-  output$map <- renderPlotly({
-    return(BuildScatter(joined.data, input$search))
+  output$chart <- renderTable({ 
+    return(shinyGetTrends(input$text, input$city))
+    
   })
 })

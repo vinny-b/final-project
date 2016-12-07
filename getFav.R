@@ -6,8 +6,6 @@ library(maps)
 library(jsonlite)
 
 
-
-
 if (!require("twitteR")) {
   install.packages("twitteR", repos="http://cran.rstudio.com/") 
   library("twitteR")
@@ -29,57 +27,79 @@ setup_twitter_oauth(consumer.key, consumer.secret, access.token, access.secret)
 ####
 
 #get favorites
-inputHandle <- "NBA"
+
+inputHandle <- "lucaspuente"
+
 favs <- favorites(inputHandle, n = 100)
+
 fav <- unlist(favs)
 
 
+#length(fav)
 
 ## for loop to build list of locations
 locationlist <- c()
 for (i in 1:length(fav))
   locationlist <- append(locationlist, (getUser(fav[[i]]$screenName)$location))
 
+###
 
 # remove everything before comma 
-listaftercomma <- gsub(".*,", "", locationlist)
+
+cleanlist <- gsub(".*,", "", locationlist)
+
 
 #convert list to dataframe 
-dflist <- as.data.frame(listaftercomma)
+dflist <- as.data.frame(cleanlist)
 
 #fix column name
 colnames(dflist) <- "stateabbrev"
 
-
-#remove all locations that aren't in state abbreviation format 
-liststateab <- grep('AL|AK|AZ|AR|CA|CO|CT|DE|FL|GA|HI|ID|IL|IN|IA|KS|KY|LA|ME|MD|MA|MI|MN|MS|MO|MT|NE|NV|NH|NJ|NM|NY|NC|ND|OH|OK|OR|PA|RI|SC|SD|TN|TX|UT|VT|VA|WA|WV|WI|WY', dflist$stateabbrev, value = TRUE)
-df1 <- as.data.frame(liststateab)
-
+#dflist <- as.data.frame(dflist, stringsAsFactors = FALSE)
+# dflist <- droplevels(dflist)
+View(dflist)
 
 
-# build a clean list of the data
-cleanlist <- c()
-for (i in 1:length(liststateab))
-  cleanlist <- append(cleanlist, as.character(liststateab[i]))
+#for loop to keep only state abbrev
 
-#remove all spaces
-statesDataFrame <- gsub('\\s+', '', cleanlist)
+#states <- c("AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY")
+#states <- as.data.frame(states, stringsAsFactors = FALSE)
 
-#make into a dataframe 
-clean_df <- as.data.frame(statesDataFrame)
-
-# update column name 
-colnames(clean_df) <- "states"
-
+# for (i in 1:length(dflist)) {
+#   for (j in 1:length(states)) {
+#     if (!identical(dflist$stateabbrev[i], states[j])) {
+#       dflist <- dflist[, -c(i)]
+#     }
+#   }
+# }
 
 
+flatlist <- flatten(dflist)
+
+liststateab <- grep('AL|AK|AZ|AR|CA|CO|CT|DE|FL|GA|HI|ID|IL|IN|IA|KS|KY|LA|ME|MD|MA|MI|MN|MS|MO|MT|NE|NV|NH|NJ|NM|NY|NC|ND|OH|OK|OR|PA|RI|SC|SD|TN|TX|UT|VT|VA|WA|WV|WI|WY', flatlist$stateabbrev, value = TRUE)
+df1 <- data.frame(liststateab)
+
+colnames(df1) <- "states1"
+
+View(df1)
+
+
+
+## practice with state codes DATA
+
+
+#df of states
+
+flatstate <- c("MA", "OR", "CA", "CA", "TX", "MD", "MD", "MD", "IL", "IL", "IL", "IL", "IL")
+datastate <- as.data.frame(flatstate)
+View(datastate)
 
 ###
 
 
 #count frequency 
-exstate <- clean_df %>% 
-  group_by(states) %>%
+exstate <- df1 %>% 
+  group_by(states1) %>%
   summarize(count = n())
 
 
@@ -99,13 +119,12 @@ g <- list(
 
 plot_geo(exstate, locationmode = 'USA-states') %>%
   add_trace(
-    z = ~count, locations = ~states,
-    color = ~count, colors = 'Oranges'
+    z = ~count, locations = ~states1,
+    color = ~count, colors = 'Purples'
   ) %>%
   colorbar(title = "Users") %>%
   layout(
     title = paste("Location of users that", inputHandle, "most recently favorited"),
     geo = g
   )
-
 
