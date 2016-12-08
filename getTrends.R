@@ -7,9 +7,11 @@ if (!require("twitteR")) {
   library("twitteR")
 }
 
+#Storing the consumer key and variable
 consumer.key <- '974S5E5vr0pJ8VuOx2oIYf4Z0'
 consumer.secret <- '8acGBD7TKoLhFVG5TSsfa0PMeUpwnQgQVDwL1BfoGy5XHowIMb'
 
+#Storing the access token and secret
 access.token <- '804111108076228608-K6ml4zNsg2RZLb4ep3Dir4JJhuzb1AQ'
 access.secret <- 'nwvP4yzA6mKNE2P0Ma0diEvHQNN24McUnLH80kbmD4uGx'
 
