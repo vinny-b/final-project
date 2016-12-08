@@ -4,7 +4,7 @@ library(plotly)
 library(maps)
 library(jsonlite)
 
-shinyUI(navbarPage('Identifying Trends in Twitter',
+shinyUI(navbarPage('Identifying Trends on Twitter',
                    # Create a tab panel for your map
                    tabPanel("What's Trending Where?",
                             titlePanel('Top Trending Tweets'),
@@ -16,7 +16,7 @@ shinyUI(navbarPage('Identifying Trends in Twitter',
                                 
                                 # Input to select variable to map
                                 
-                                br("Choose a city to see the top 10 trending topics in that city."),
+                                br("Choose a city to see the top 10 trending tweets in that city."),
                                 br(),
         
                                 selectInput('city', label = 'Choose a city:', choices = list('Albuquerque' = 'Albuquerque', 'Atlanta' = 'Atlanta', 'Austin' = 'Austin',
