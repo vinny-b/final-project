@@ -23,21 +23,10 @@ setup_twitter_oauth(consumer.key, consumer.secret, access.token, access.secret)
 
 shinyGetTrends <- function (inputString, inputCity = "Albuquerque") {
   
-  
-  # Get all locations within the US
-  trends.data.frame <- availableTrendLocations() %>%
-    filter(country %in% 'United States')
-  
-  # Remove the United States from the list
-  trends.data.frame <- trends.data.frame[-c(64), ]
-  # View(trends.data.frame)
-  
   # Dataframe of all cities that twitteR has trending data on and their
   # corresponding longitude and latitude coordinates. This list of cities
   # was retrieved by using twitteR's availableTrendLocations() method
   geo.location.data <- read.csv(file = 'GeoLocationData.csv')
-  View(geo.location.data)
-
   
   # Formats and returns the user's search string so that it's compatible with the 
   # twitteR searchTwitter function that retrieves the posts
