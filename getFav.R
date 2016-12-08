@@ -37,85 +37,86 @@ setup_twitter_oauth(consumer.key, consumer.secret, access.token, access.secret)
 
 #getting favorites of the user handle
 getFav <- function(inputHandle){
-favs <- favorites(inputHandle, n = 100)
-fav <- unlist(favs)
-
-
-
-## for loop to build list of locations
-locationlist <- c()
-for (i in 1:length(fav))
-  locationlist <- try((append(locationlist, (getUser(fav[[i]]$screenName)$location))), silent = TRUE)
-
-
-# removing everything before comma in the lise
-listaftercomma <- gsub(".*,", "", locationlist)
-
-#converting list to dataframe 
-dflist <- as.data.frame(listaftercomma)
-
-#Changing column name
-colnames(dflist) <- "stateabbrev"
-
-
-#Removing all locations that aren't in state abbreviation format 
-liststateab <- grep('AL|AK|AZ|AR|CA|CO|CT|DE|FL|GA|HI|ID|IL|IN|IA|KS|KY|LA|ME|MD|MA|MI|MN|MS|MO|MT|NE|NV|NH|NJ|NM|NY|NC|ND|OH|OK|OR|PA|RI|SC|SD|TN|TX|UT|VT|VA|WA|WV|WI|WY', dflist$stateabbrev, value = TRUE)
-
-
-
-
-# Building a clean list of the data
-cleanlist <- c()
-for (i in 1:length(liststateab))
-  cleanlist <- append(cleanlist, as.character(liststateab[i]))
-
-#Removing all spaces
-statesDataFrame <- gsub('\\s+', '', cleanlist)
-
-#Converting into dataframe 
-clean_df <- as.data.frame(statesDataFrame)
-
-#Changing column name 
-colnames(clean_df) <- "states"
-
-
-
-
-###
-
-
-#Using dplyr to summarize the data 
-exstate <- clean_df %>% 
-  group_by(states) %>%
-  summarize(count = n())
-
-
-
-#Building frequency heat map
-
-#Giving state boundaries a white border
-l <- list(color = toRGB("white"), width = 2)
-#Specifying some map attributes
-g <- list(
-  scope = 'usa',
-  projection = list(type = 'albers usa'),
-  showlakes = TRUE,
-  lakecolor = toRGB('white')
-)
-
-#Specifying Columns and Axis
-map <- plot_geo(exstate, locationmode = 'USA-states') %>%
-  add_trace(
-    z = ~count, locations = ~states,
-    color = ~count, colors = 'Purples'
-  ) %>%
-#Setting the colorbar   
-  colorbar(title = "Users") %>%
-  layout(
-    title = paste("Location of users that", inputHandle, "most recently favorited"),
-    geo = g
-  )
-#Returning map
-return(map)
+  if (inputHandle == 'error') {
+      return_value <- "You didn't enter a Twitter handle."
+      stop("error message")
+  } else {
+  
+    favs <- favorites(inputHandle, n = 100)
+    fav <- unlist(favs)
+    
+    
+    
+    ## for loop to build list of locations
+    locationlist <- c()
+    for (i in 1:length(fav))
+      locationlist <- (append(locationlist, (getUser(fav[[i]]$screenName)$location)))
+    
+    
+    # removing everything before comma in the lise
+    listaftercomma <- gsub(".*,", "", locationlist)
+    
+    #converting list to dataframe 
+    dflist <- as.data.frame(listaftercomma)
+    
+    #Changing column name
+    colnames(dflist) <- "stateabbrev"
+    
+    
+    #Removing all locations that aren't in state abbreviation format 
+    liststateab <- grep('AL|AK|AZ|AR|CA|CO|CT|DE|FL|GA|HI|ID|IL|IN|IA|KS|KY|LA|ME|MD|MA|MI|MN|MS|MO|MT|NE|NV|NH|NJ|NM|NY|NC|ND|OH|OK|OR|PA|RI|SC|SD|TN|TX|UT|VT|VA|WA|WV|WI|WY', dflist$stateabbrev, value = TRUE)
+    
+    
+    
+    
+    # Building a clean list of the data
+    cleanlist <- c()
+    for (i in 1:length(liststateab))
+      cleanlist <- append(cleanlist, as.character(liststateab[i]))
+    
+    #Removing all spaces
+    statesDataFrame <- gsub('\\s+', '', cleanlist)
+    
+    #Converting into dataframe 
+    clean_df <- as.data.frame(statesDataFrame)
+    
+    #Changing column name 
+    colnames(clean_df) <- "states"
+    
+    
+    #Using dplyr to summarize the data 
+    exstate <- clean_df %>% 
+      group_by(states) %>%
+      summarize(count = n())
+    
+    
+    
+    #Building frequency heat map
+  
+    #Giving state boundaries a white border
+    l <- list(color = toRGB("white"), width = 2)
+    #Specifying some map attributes
+    g <- list(
+      scope = 'usa',
+      projection = list(type = 'albers usa'),
+      showlakes = TRUE,
+      lakecolor = toRGB('white')
+    )
+    
+    #Specifying Columns and Axis
+    map <- plot_geo(exstate, locationmode = 'USA-states') %>%
+      add_trace(
+        z = ~count, locations = ~states,
+        color = ~count, colors = 'Reds'
+      ) %>%
+    #Setting the colorbar   
+      colorbar(title = "Users") %>%
+      layout(
+        title = paste("Location of users that", inputHandle, "most recently favorited"),
+        geo = g
+      )
+    #Returning map
+    return(map)
+  }
 }
 
