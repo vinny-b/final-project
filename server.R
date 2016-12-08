@@ -11,7 +11,7 @@ shinyServer(function(input, output) {
 #Render table returning the trends using shintGetTrends function
   
   output$chart <- renderTable({ 
-    return(shinyGetTrends(input$text, input$city))
+    return(getTrends(input$text, input$city))
   })
 
 # Render a plotly map showing the locations of where the tweets generated were favorited using getFav function  
