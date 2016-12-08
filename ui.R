@@ -67,12 +67,12 @@ shinyUI(navbarPage('Identifying Trends on Twitter',
                               # Create a sidebarPanel for your controls (inputs)
                               sidebarPanel(
                                 
-                                # Make a textInput widget for the user handle whose favorite amp you want to see
-                                textInput('search', label="Twitter Handle:", value = 'Enter Twitter handle...')
+                                # Make a textInput widget for the user handle whose favorite map you want to see
+                                textInput('search', label="Twitter Handle:")
                               ),
                               
                               # Create a main panel, in which you should display your plotly Scatter plot and 
-                              #summary of the map tab
+                              #summary of the favorite map
                               mainPanel(
                                 textOutput('textMap'),
                                 plotlyOutput('map')
