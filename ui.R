@@ -50,7 +50,7 @@ shinyUI(navbarPage('Identifying Trends on Twitter',
     
                                 
                 
-                              # Main panel: display plotly map and summary of the trends tab
+                              # Main panel: display plotly map and summary paragraph of the trends tab
                               mainPanel(
                                 textOutput('textTrends'),
                                 tableOutput('chart')
@@ -58,16 +58,16 @@ shinyUI(navbarPage('Identifying Trends on Twitter',
                    )
                    ),
                    tabPanel('Favorites Map',
-                            # Add a titlePanel to your tab
+                            # Adding a titlePanel to the tab
                             titlePanel('Where are your favorite Tweets coming from?'),
                             
                             # Create a sidebar layout for this tab (page)
                             sidebarLayout(
                               
-                              # Create a sidebarPanel for your controls
+                              # Create a sidebarPanel for your controls (inputs)
                               sidebarPanel(
                                 
-                                # Make a textInput widget for searching for a state in your scatter plot
+                                # Make a textInput widget for the user handle whose favorite amp you want to see
                                 textInput('search', label="Twitter Handle:", value = 'Enter Twitter handle...')
                               ),
                               
