@@ -50,8 +50,9 @@ shinyUI(navbarPage('Identifying Trends in Twitter',
     
                                 
                 
-                              # Main panel: display plotly map
+                              # Main panel: display plotly map and summary of the trends tab
                               mainPanel(
+                                textOutput('textTrends'),
                                 tableOutput('chart')
                               )
                    )
@@ -70,8 +71,10 @@ shinyUI(navbarPage('Identifying Trends in Twitter',
                                 textInput('search', label="Twitter Handle:", value = 'Enter Twitter handle...')
                               ),
                               
-                              # Create a main panel, in which you should display your plotly Scatter plot
+                              # Create a main panel, in which you should display your plotly Scatter plot and 
+                              #summary of the map tab
                               mainPanel(
+                                textOutput('textMap'),
                                 plotlyOutput('map')
                               )
                             )
