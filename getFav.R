@@ -45,7 +45,7 @@ fav <- unlist(favs)
 ## for loop to build list of locations
 locationlist <- c()
 for (i in 1:length(fav))
-  locationlist <- append(locationlist, (getUser(fav[[i]]$screenName)$location))
+  locationlist <- try((append(locationlist, (getUser(fav[[i]]$screenName)$location))), silent = TRUE)
 
 
 # removing everything before comma in the lise
@@ -107,7 +107,7 @@ g <- list(
 map <- plot_geo(exstate, locationmode = 'USA-states') %>%
   add_trace(
     z = ~count, locations = ~states,
-    color = ~count, colors = 'Oranges'
+    color = ~count, colors = 'Purples'
   ) %>%
 #Setting the colorbar   
   colorbar(title = "Users") %>%
@@ -118,4 +118,4 @@ map <- plot_geo(exstate, locationmode = 'USA-states') %>%
 #Returning map
 return(map)
 }
-
+getFav("NBA")
