@@ -41,7 +41,7 @@ shinyGetTrends <- function (inputString, inputCity = "Albuquerque") {
   # chosen.city
   city.geocode <- paste0(input.city.coordinates, ",50mi")
   
-  num.posts <- 20
+  num.posts <- 10
   
   # This function gets the recent posts that contain a given search string in 
   # the chosen city. If there are fewer posts than asked for, this function will
