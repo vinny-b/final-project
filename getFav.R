@@ -29,7 +29,7 @@ setup_twitter_oauth(consumer.key, consumer.secret, access.token, access.secret)
 ####
 
 #get favorites
-
+getFav <- function(inputHandle){
 favs <- favorites(inputHandle, n = 100)
 fav <- unlist(favs)
 
@@ -53,7 +53,7 @@ colnames(dflist) <- "stateabbrev"
 
 #remove all locations that aren't in state abbreviation format 
 liststateab <- grep('AL|AK|AZ|AR|CA|CO|CT|DE|FL|GA|HI|ID|IL|IN|IA|KS|KY|LA|ME|MD|MA|MI|MN|MS|MO|MT|NE|NV|NH|NJ|NM|NY|NC|ND|OH|OK|OR|PA|RI|SC|SD|TN|TX|UT|VT|VA|WA|WV|WI|WY', dflist$stateabbrev, value = TRUE)
-df1 <- as.data.frame(liststateab)
+
 
 
 
@@ -97,7 +97,7 @@ g <- list(
 )
 
 
-plot_geo(exstate, locationmode = 'USA-states') %>%
+map <- plot_geo(exstate, locationmode = 'USA-states') %>%
   add_trace(
     z = ~count, locations = ~states,
     color = ~count, colors = 'Oranges'
@@ -107,4 +107,6 @@ plot_geo(exstate, locationmode = 'USA-states') %>%
     title = paste("Location of users that", inputHandle, "most recently favorited"),
     geo = g
   )
+return(map)
+}
 
