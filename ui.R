@@ -50,7 +50,7 @@ shinyUI(navbarPage('Identifying Trends on Twitter',
     
                                 
                 
-                              # Main panel: display plotly map and summary paragraph of the trends tab
+                              # Main panel: display plotly map and summary of the trends tab
                               mainPanel(
                                 textOutput('textTrends'),
                                 tableOutput('chart')
