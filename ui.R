@@ -1,6 +1,9 @@
 # ui.R
 library(shiny)
 library(plotly)
+library(maps)
+library(jsonlite)
+
 shinyUI(navbarPage('Identifying Trends in Twitter',
                    # Create a tab panel for your map
                    tabPanel("What's Trending Where?",
@@ -52,5 +55,25 @@ shinyUI(navbarPage('Identifying Trends in Twitter',
                                 tableOutput('chart')
                               )
                    )
-                   )
-))
+                   ),
+                   tabPanel('Favorites Map',
+                            # Add a titlePanel to your tab
+                            titlePanel('Where are your favorite Tweets coming from?'),
+                            
+                            # Create a sidebar layout for this tab (page)
+                            sidebarLayout(
+                              
+                              # Create a sidebarPanel for your controls
+                              sidebarPanel(
+                                
+                                # Make a textInput widget for searching for a state in your scatter plot
+                                textInput('search', label="Twitter Handle:", value = 'Enter Twitter handle...')
+                              ),
+                              
+                              # Create a main panel, in which you should display your plotly Scatter plot
+                              mainPanel(
+                                plotlyOutput('map')
+                              )
+                            )
+                            )
+    ))
