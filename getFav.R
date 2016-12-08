@@ -118,4 +118,4 @@ map <- plot_geo(exstate, locationmode = 'USA-states') %>%
 #Returning map
 return(map)
 }
-getFav("NBA")
+
