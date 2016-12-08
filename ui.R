@@ -7,7 +7,7 @@ library(jsonlite)
 shinyUI(navbarPage('Identifying Trends in Twitter',
                    # Create a tab panel for your map
                    tabPanel("What's Trending Where?",
-                            titlePanel('Top Trending Tweets Statewide'),
+                            titlePanel('Top Trending Tweets'),
                             # Create sidebar layout
                             sidebarLayout(
                               
@@ -42,7 +42,7 @@ shinyUI(navbarPage('Identifying Trends in Twitter',
                                                                                              'Washington' = 'Washington')),
                                 br("Further specify your result by entering a keyword to see related tweets in that city."),
                                 br(),
-                                textInput("text", label = "Search for a Tweet:"),
+                                textInput("text", label = "Search for a Trend:"),
                                 br()
                                 
                                 

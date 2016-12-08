@@ -13,7 +13,7 @@ shinyServer(function(input, output) {
   output$chart <- renderTable({ 
     return(shinyGetTrends(input$text, input$city))
   })
-  output$map <- plotOutput({
+  output$map <- renderPlotly({
     return(getFav(input$string))
   })
 })
