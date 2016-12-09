@@ -40,7 +40,7 @@ shinyUI(navbarPage('Identifying Trends on Twitter',
                                                                                              'Seattle' = 'Seattle' , 'St. Louis' = 'St._Louis' , 'Tallahassee' = 'Tallahassee' ,
                                                                                              'Tampa' = 'Tampa' , 'Tuscon' = 'Tuscon' , 'Virginia Beach' = "Virginia_Beach",
                                                                                              'Washington' = 'Washington')),
-                                br("Further specify your result by entering a keyword to see related tweets in that city."),
+                                br("Further specify your result by entering a phrase to see related tweets in that city."),
                                 br(),
                                 textInput("text", label = "Search for a Trend:"),
                                 br()
@@ -68,15 +68,15 @@ shinyUI(navbarPage('Identifying Trends on Twitter',
                               sidebarPanel(
                                 
                                 # Make a textInput widget for the user handle whose favorite map you want to see
-                                textInput('user', label="Twitter Handle: ")
+                                textInput('user', label="Twitter Handle: ", value = "NASA")
                               ),
                               
                               # Create a main panel, in which you should display your plotly Scatter plot and 
                               #summary of the favorite map
                               mainPanel(
                                 textOutput('textMap'),
-                                strong("If you don't enter anything into the text box, an error message will appear. Please ignore this.
-                                        This widget will take some time to load, please be patient."),
+                                strong("If you don't enter anything into the text box and while this map is loading, an error 
+                                        message will appear. Please ignore this. This widget will take some time to load, please be patient."),
                                 br(), br(), 
                                 plotlyOutput('map')
                               )
