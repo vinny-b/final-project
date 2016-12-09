@@ -39,7 +39,7 @@ shinyServer(function(input, output) {
     paste0(
       "The following map is created by using your input of a twitter user handle (@", input$user
           , "), by gathering the latest 100 favorites (likes) from their account and locations where the tweets were 
-          generated from. The information is then summarized into a heat map displayed below, where the 
+          generated from. The information is then summarized into a choropleth map displayed below, where the 
           darker areas represent more tweets were favorited from that area by the user (@", input$user
           , "). Some good examples would be NBA, Google, NASA, Microsoft, MTV."
       )

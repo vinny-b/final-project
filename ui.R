@@ -23,7 +23,7 @@ shinyUI(navbarPage('Identifying Trends on Twitter',
                                                                                              'Baltimore' = 'Baltimore', 'Baton Rouge' = 'Baton_Rouge' , 'Birmingham' = 'Birmingham' ,
                                                                                              'Boston' = 'Boston' , 'Charlotte' = 'Charlotte' , 'Chicago' = 'Chicago' , 
                                                                                              'Cincinnati' = 'Cincinnati' , 'Cleveland' = 'Cleveland' , 'Colorado Springs' = 'Colorado_Springs' ,
-                                                                                             'Columbus' = 'Columbus' , 'Dallas_Ft. Worth' = 'Dallas-Ft._Worth' , 'Denver' = 'Denver' ,
+                                                                                             'Columbus' = 'Columbus' , 'Dallas Ft. Worth' = 'Dallas-Ft._Worth' , 'Denver' = 'Denver' ,
                                                                                              'Detroit' = 'Detroit' , 'El Paso' = 'El_Paso' , 'Fresno' = 'Fresno', 'Greensboro' = 'Greensboro' ,
                                                                                              'Harrisburg' = 'Harrisburg', 'Honolulu' = 'Honolulu', 'Houston' = 'Houston' ,
                                                                                              'Indianapolis' = 'Indianapolis' , 'Jackson' = 'Jackson' , 'Jacksonville' = 'Jacksonville' ,
@@ -45,10 +45,7 @@ shinyUI(navbarPage('Identifying Trends on Twitter',
                                 textInput("text", label = "Search for a Trend:"),
                                 br()
                                 
-                                
                               ),
-    
-                                
                 
                               # Main panel: display plotly map and summary of the trends tab
                               mainPanel(
@@ -59,7 +56,7 @@ shinyUI(navbarPage('Identifying Trends on Twitter',
                    ),
                    tabPanel('Favorites Map',
                             # Adding a titlePanel to the tab
-                            titlePanel('Where are your favorite Tweets coming from?'),
+                            titlePanel('Where are your favorited Tweets coming from?'),
                             
                             # Create a sidebar layout for this tab (page)
                             sidebarLayout(
@@ -68,7 +65,7 @@ shinyUI(navbarPage('Identifying Trends on Twitter',
                               sidebarPanel(
                                 
                                 # Make a textInput widget for the user handle whose favorite map you want to see
-                                textInput('user', label="Twitter Handle: ", value = "NASA")
+                                textInput('user', label="Twitter Handle: ", value = "Microsoft")
                               ),
                               
                               # Create a main panel, in which you should display your plotly Scatter plot and 
